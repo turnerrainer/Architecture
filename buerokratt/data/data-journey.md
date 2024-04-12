@@ -1,4 +1,6 @@
-### Legend
+### Data journey
+
+#### Legend
 
 `Client` is the end client talking to Bürokratt.
 
@@ -18,7 +20,7 @@
 
 `External` is considered as a service provided by any third-party service providers. They can be LLMs, classifiers, etc.
 
-### Use case nr 1 - End Client gets their response from Rasa
+#### Use case nr 1 - End Client gets their response from Rasa
 
 This is an overview of data journey when the End Client chats with Bürokratt and gets their response from local Rasa.
 
@@ -62,7 +64,7 @@ sequenceDiagram
   Widget-->>-Client: The book Kevade was written by an Estonian writer Oskar Luts
 ```
 
-### Use case nr 2 - End Client gets their response from and External source
+#### Use case nr 2 - End Client gets their response from and External source
 
 This is an overview of data journey when the End Client chats with Bürokratt and gets their response from an External service providers due to local Rasa not being able to respond.
 
