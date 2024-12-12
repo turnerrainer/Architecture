@@ -211,3 +211,35 @@ Allowing cross-table joins can lead to significant performance bottlenecks, unin
 - Ensures clear separation of concerns between data storage and processing.
 
 ---
+
+## ADR-013: Historical Data Filtering and Migration
+
+### **Context**
+To minimize the risk of data exposure during a database breach, historical entries that have lost their operational relevance must be identified and moved to a secure backup location. These entries should not remain in the production database.
+
+### **Decision**
+- Queries to filter and move outdated data must:
+  - Be implemented as separate `.sql` files, triggered by scheduled cron jobs.
+  - Include metadata linking them to the operational queries they are derived from.
+  - Ensure that all removed data is backed up securely before deletion from the production database.
+
+### **Examples**
+```sql
+-- Linked Query: get_customer_details.sql
+-- Description: Archive inactive customer records older than 5 years.
+-- Execution Frequency: Weekly
+INSERT INTO backup_customers (id, name, email, archived_at)
+SELECT id, name, email, NOW()
+FROM customers
+WHERE last_active_date < NOW() - INTERVAL '5 years';
+
+DELETE FROM customers
+WHERE last_active_date < NOW() - INTERVAL '5 years';
+```
+
+### **Consequences**
+- Reduces the amount of historical data in the production database, minimizing the potential impact of breaches.
+- Ensures historical data is preserved in a secure location.
+- Improves production database performance by reducing its size.
+
+---
