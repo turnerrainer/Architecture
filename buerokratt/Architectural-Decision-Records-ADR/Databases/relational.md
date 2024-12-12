@@ -150,7 +150,7 @@ Providing metadata comments for execution expectations helps ensure clarity rega
 -- Expected Runtime: < 100ms
 -- Expected Input Size: Up to 10,000 rows
 -- Performance Constraints: Optimized for indexed fields only
-SELECT id, name FROM customers WHERE status = $1;
+SELECT id, name FROM customers WHERE status = :status_param;
 ```
 
 ### **Consequences**
@@ -169,7 +169,7 @@ Using `SELECT *` in SQL queries can lead to inefficiencies, unintended data expo
 - `SELECT *` is not allowed in any query.
 - All columns to be retrieved must be explicitly listed in the query.
   ```sql
-  SELECT id, name, email FROM customers WHERE status = $1;
+  SELECT id, name, email FROM customers WHERE status = :status_param;
   ```
 
 ### **Consequences**
