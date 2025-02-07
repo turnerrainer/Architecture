@@ -19,16 +19,44 @@ To ensure modularity and maintainability, all database queries will be stored as
 ## ADR-002: Naming Conventions
 
 ### **Context**
-Consistent naming conventions are critical for query discoverability and uniformity across the project.
+A standardized naming convention for SQL queries ensures clarity, maintainability, and consistency across database operations. By enforcing a structured format, we enhance query readability and facilitate efficient collaboration between developers and database administrators.
 
 ### **Decision**
-- File names will follow the convention: `{action}_{resource}_{operation}.sql`.
-- Use descriptive names that avoid ambiguity or reserved words.
-- Example: `get_customer_details.sql`, `post_order_create.sql`.
+All SQL queries must adhere to the following naming convention, aligning with RESTful principles and CRUD (Create, Read, Update, Delete) operations:
+1. Retrieving multiple records (List) &rarr; `list_{resource}`
+1. Retrieving a single record (Get) &rarr; `get_{resource}`
+1. Creating a new record &rarr; `create_{resource}`
+1. Updating an existing record &rarr; `update_{resource}`
+1. Deleting a record &rarr; `delete_{resource}`
 
-### **Consequences**
-- Enhances readability and searchability.
-- Reduces confusion during development and maintenance.
+**Examples**
+
+1. `list_llm_training` &rarr; Retrieves all LLM training records
+1. `get_llm_training` &rarr; Retrieves a single LLM training record
+1. `create_llm_training` &rarr; Inserts a new LLM training record
+1. `update_llm_training` &rarr; Updates an existing LLM training record
+1. `delete_llm_training` &rarr; Deletes an LLM training record
+
+#### Additional Rules
+1. Use **snake_case** for all SQL query names.
+1. Use **plural or singular form based on the resource** (e.g., `list_users`, `get_user`).
+1. Avoid abbreviations unless widely recognized (`llm_training` instead of `lt`).
+1. Always include the HTTP method in function names to indicate the operation type.
+
+### Consequences
+
+#### Positive Impacts
+1. Enhances **readability**, **maintainability**, and **searchability** of SQL queries.
+2. Ensures **uniformity** across all database operations.
+3. Reduces ambiguity, making it easier to **understand query intent** at a glance.
+4. Facilitates **collaboration** by providing clear naming conventions for database interactions.
+
+#### Potential Trade-Offs
+1. Requires **strict adherence** to the policy, which may necessitate training for new developers.
+2. Requires **major refactoring** for legacy queries that do not follow this standard.
+
+### Status
+**Approved** – This convention is now mandatory for all future database queries.
 
 ---
 
